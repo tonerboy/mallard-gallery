@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Operation MALLARD — Prop Gallery</title>
+<meta name="description" content="Operation MALLARD prop gallery: handout images and the idd13 signal verse posts, days 1–13.">
+<meta property="og:title" content="Operation MALLARD — Prop Gallery">
+<meta property="og:description" content="Handout props and signal verse posts (days 1–13) for the Operation MALLARD one-shot.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tonerboy.github.io/mallard-gallery/">
+<meta property="og:image" content="https://tonerboy.github.io/mallard-gallery/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#10130f">
+<style>
+  :root {
+    --bg: #10130f;
+    --panel: #181c16;
+    --rule: #2c332a;
+    --text: #d7dcd2;
+    --muted: #8b9384;
+    --accent: #9fb87a;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
+    padding: 28px 20px 8px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 1.25rem; margin: 0 0 4px; letter-spacing: .04em; }
+  h1 span { color: var(--muted); font-weight: 400; }
+  .sub { color: var(--muted); font-size: .85rem; margin: 0 0 8px; }
+  .hint { color: var(--muted); font-size: .78rem; margin: 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
+  section { margin-top: 34px; }
+  h2 {
+    font-size: .95rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 4px;
+  }
+  .count { color: var(--muted); font-size: .8rem; margin: 0 0 14px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  .cell {
+    display: block; position: relative; overflow: hidden;
+    border: 1px solid var(--rule); border-radius: 6px;
+    background: var(--panel); line-height: 0; cursor: pointer;
+    text-decoration: none;
+  }
+  .cell:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .cell img { width: 100%; height: auto; display: block; }
+  .cell .tag {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 6px 8px; line-height: 1.25; font-size: .72rem;
+    color: var(--text); background: rgba(10, 12, 9, .82);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  /* ---- lightbox ---- */
+  #lb {
+    position: fixed; inset: 0; z-index: 50; display: none;
+    flex-direction: column; background: rgba(6, 8, 5, .96);
+  }
+  #lb.open { display: flex; }
+  .lb-top {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; color: var(--muted); font-size: .82rem;
+  }
+  .lb-top .cap { color: var(--text); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lb-btn {
+    appearance: none; border: 1px solid var(--rule); border-radius: 6px;
+    background: var(--panel); color: var(--text); font: inherit; font-size: .82rem;
+    padding: 7px 12px; cursor: pointer; touch-action: manipulation;
+  }
+  .lb-btn:active { background: #232a1f; }
+  .lb-stage {
+    flex: 1; min-height: 0; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 54px;
+  }
+  @media (max-width: 640px) { .lb-stage { padding: 0 8px; } }
+  #lbImg { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; }
+  .arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 46px; height: 64px; font-size: 1.5rem; line-height: 1;
+    background: rgba(20, 24, 18, .8);
+  }
+  .arrow.prev { left: 6px; }
+  .arrow.next { right: 6px; }
+  @media (max-width: 640px) {
+    .arrow { width: 42px; height: 56px; }
+    .arrow.prev { left: 2px; }
+    .arrow.next { right: 2px; }
+  }
+  .lb-foot {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    color: var(--muted); font-size: .82rem;
+  }
+  #toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(8px);
+    background: var(--panel); border: 1px solid var(--rule); color: var(--text);
+    padding: 8px 16px; border-radius: 6px; font-size: .82rem;
+    opacity: 0; pointer-events: none; transition: opacity .18s, transform .18s; z-index: 60;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Operation MALLARD <span>— prop gallery</span></h1>
+  <p class="sub">Handout props and idd13 signal verse posts, days 1–13. · <a href="doc.html" style="color:var(--accent)">Master document →</a></p>
+  <p class="hint">Tap any image to expand. Navigate with the on-screen arrows, ←/→ keys, or a swipe. Use “Copy link” to share a direct link to any image.</p>
+</header>
+<main id="main"></main>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="Expanded image view">
+  <div class="lb-top">
+    <span class="cap" id="lbCap"></span>
+    <span id="lbCount"></span>
+    <button class="lb-btn" id="lbCopy" type="button">Copy link</button>
+    <button class="lb-btn" id="lbClose" type="button" aria-label="Close">✕</button>
+  </div>
+  <div class="lb-stage" id="lbStage">
+    <img id="lbImg" alt="">
+    <button class="lb-btn arrow prev" id="lbPrev" type="button" aria-label="Previous">‹</button>
+    <button class="lb-btn arrow next" id="lbNext" type="button" aria-label="Next">›</button>
+  </div>
+  <div class="lb-foot"><span>←/→ or swipe to navigate · Esc to close</span></div>
+</div>
+<div id="toast">Link copied</div>
+
+<script>
+const GROUPS = [
+  { id: "props", title: "Handout props", items: [
+    ["h01-p1",  "H01-tasking-packet_p1.jpg", "Tasking packet — p. 1"],
+    ["h02",     "H02-evidence-photo-the-sigil.jpg", "Evidence photo: the sigil"],
+    ["h03",     "H03-witness-statement.jpg", "Witness statement"],
+    ["h04",     "H04-me-preliminary-report.jpg", "ME preliminary report"],
+    ["h05-p1",  "H05-signal-extraction-the-courtship_p1.jpg", "Signal extraction: the courtship — p. 1"],
+    ["h05-p2",  "H05-signal-extraction-the-courtship_p2.jpg", "Signal extraction: the courtship — p. 2"],
+    ["h06-p1",  "H06-degradation-log_p1.jpg", "The degradation log — p. 1"],
+    ["h06-p2",  "H06-degradation-log_p2.jpg", "The degradation log — p. 2"],
+    ["h07",     "H07-aklo-pledge-tripwire-match.jpg", "The Aklo pledge: tripwire match"],
+    ["h08",     "H08-meme-collage-4-of-unknown.jpg", "Meme collage"],
+    ["h09-p1",  "H09-verse-memes-one-week_p1.jpg", "Verse memes: one week — p. 1"],
+    ["h09-p2",  "H09-verse-memes-one-week_p2.jpg", "Verse memes: one week — p. 2"],
+    ["h10",     "H10-drone-stills-three-scenes.jpg", "Drone stills: three scenes"],
+    ["h11",     "H11-body-camera-evidence-photo.jpg", "Body camera evidence photo"],
+    ["h12",     "H12-shipping-label-and-receipt.jpg", "Shipping label + receipt"],
+    ["h13",     "H13-corridor-map-six-states.jpg", "Corridor map"],
+    ["h14-p1",  "H14-unsent-letter-fourth-visitor_p1.jpg", "The unsent letter — p. 1"],
+    ["h14-p2",  "H14-unsent-letter-fourth-visitor_p2.jpg", "The unsent letter — p. 2"],
+    ["h15",     "H15-tape-box-labels.jpg", "Tape box labels"],
+    ["h16",     "H16-detective-card.jpg", "Detective's card (Det. Hurwitz)"],
+    ["h17",     "H17-witness-addendum.jpg", "Witness addendum (R. Calloway)"]
+  ]},
+  { id: "signal", title: "Signal verse posts", items: [
+    ["day01", "signal_day01.png", "Verse post — Day 1"],
+    ["day02", "signal_day02.png", "Verse post — Day 2"],
+    ["day03", "signal_day03.png", "Verse post — Day 3"],
+    ["day04", "signal_day04.png", "Verse post — Day 4"],
+    ["day05", "signal_day05.png", "Verse post — Day 5"],
+    ["day06", "signal_day06.png", "Verse post — Day 6"],
+    ["day07", "signal_day07.png", "Day 7 — activation sigil; 47 replies in 9 minutes"],
+    ["day08", "signal_day08.png", "Verse post — Day 8"],
+    ["day09", "signal_day09.png", "Verse post — Day 9"],
+    ["day10", "signal_day10.png", "Day 10 — 3:12 AM, the cadence break"],
+    ["day11", "signal_day11.png", "Day 11 — “HE GOES TO THE ALTAR”"],
+    ["day12", "signal_day12.png", "Verse post — Day 12"],
+    ["day13", "signal_day13.png", "The 13th hour — text only, no image, no replies"]
+  ]}
+];
+
+const ALL = [];
+GROUPS.forEach(g => g.items.forEach(([id, file, cap]) =>
+  ALL.push({ id, file, cap, group: g.title, src: "pics/" + file })));
+
+// build grid
+const main = document.getElementById("main");
+GROUPS.forEach(g => {
+  const sec = document.createElement("section");
+  const h2 = document.createElement("h2");
+  h2.textContent = g.title;
+  const cnt = document.createElement("p");
+  cnt.className = "count";
+  cnt.textContent = g.items.length + " images";
+  const grid = document.createElement("div");
+  grid.className = "grid";
+  g.items.forEach(([id, file, cap]) => {
+    const a = document.createElement("a");
+    a.className = "cell";
+    a.href = "#" + id;
+    a.dataset.id = id;
+    const img = document.createElement("img");
+    img.src = "pics/" + file;
+    img.alt = cap;
+    img.loading = "lazy";
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = cap;
+    a.append(img, tag);
+    grid.appendChild(a);
+  });
+  sec.append(h2, cnt, grid);
+  main.appendChild(sec);
+});
+
+// lightbox
+const lb = document.getElementById("lb"), lbImg = document.getElementById("lbImg"),
+      lbCap = document.getElementById("lbCap"), lbCount = document.getElementById("lbCount");
+let cur = -1;
+
+function openAt(i, pushHash = true) {
+  cur = (i + ALL.length) % ALL.length;
+  const it = ALL[cur];
+  lbImg.src = it.src;
+  lbImg.alt = it.cap;
+  lbCap.textContent = it.cap;
+  lbCount.textContent = (cur + 1) + " / " + ALL.length;
+  lb.classList.add("open");
+  document.body.style.overflow = "hidden";
+  if (pushHash) history.replaceState(null, "", "#" + it.id);
+}
+function closeLb() {
+  lb.classList.remove("open");
+  document.body.style.overflow = "";
+  history.replaceState(null, "", location.pathname);
+  cur = -1;
+}
+const next = () => openAt(cur + 1);
+const prev = () => openAt(cur - 1);
+
+main.addEventListener("click", e => {
+  const a = e.target.closest("a.cell");
+  if (!a) return;
+  e.preventDefault();
+  openAt(ALL.findIndex(x => x.id === a.dataset.id));
+});
+document.getElementById("lbNext").addEventListener("click", next);
+document.getElementById("lbPrev").addEventListener("click", prev);
+document.getElementById("lbClose").addEventListener("click", closeLb);
+document.getElementById("lbCopy").addEventListener("click", async () => {
+  if (cur < 0) return;
+  const url = location.origin + location.pathname + "#" + ALL[cur].id;
+  try { await navigator.clipboard.writeText(url); }
+  catch {
+    const t = document.createElement("textarea");
+    t.value = url; document.body.appendChild(t); t.select();
+    document.execCommand("copy"); t.remove();
+  }
+  const toast = document.getElementById("toast");
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 1400);
+});
+document.addEventListener("keydown", e => {
+  if (cur < 0) return;
+  if (e.key === "Escape") closeLb();
+  else if (e.key === "ArrowRight") next();
+  else if (e.key === "ArrowLeft") prev();
+});
+// swipe
+let tx = null;
+document.getElementById("lbStage").addEventListener("touchstart",
+  e => { tx = e.touches[0].clientX; }, { passive: true });
+document.getElementById("lbStage").addEventListener("touchend", e => {
+  if (tx === null || cur < 0) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 48) (dx < 0 ? next : prev)();
+  tx = null;
+}, { passive: true });
+
+// deep link
+function openFromHash() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  const i = ALL.findIndex(x => x.id === id);
+  if (i >= 0) openAt(i, false);
+}
+window.addEventListener("hashchange", openFromHash);
+if (location.hash) openFromHash();
+</script>
+</body>
+</html>
